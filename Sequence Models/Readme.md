@@ -1,13 +1,65 @@
+<hr>
 
-<ul>
-  <li>NLP lerde CNN kullanılmama sebepleri :   </li>
-  <ul>
-    <li >Çıkış farklı boyutlarda olabilir,   </li>
-    <li>Farklı konumlarda öğrenilen özellikler paylaşılamaz. (Giriş çıkışta değil, ara katmanlarda öğrenilen özellikler )  Bu nedenle Tekrarlayan sinir ağı RNN kullanılır. Bir RNN örneği  ; </li>
-  </ul>
-</ul><br>
+* Kaynak : 
+Bu not, DeepLearning.ai tarafından verilen "Sequence Models" adlı eğtiime ait notları içermektedir. İlgili notlar, [sayfasında](https://github.com/quanghuy0497/Deep-Learning-Specialization/tree/main/Course%205%20-%20Sequence%20Models) yer alan İngilizce metinden çevirilmiştir. <br>
 
-![1.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/1.jpg) <br>
+<hr>
+
+İçerik : <br>
+1) Tekrarlayan Sinir Ağları
+	* Neden sıralı modeller
+	* Gösterim
+	* Tekrarlayan Sinir Ağı Modeli
+	* Zaman içinde geri yayılım
+	* Farklı RNN türleri
+	* Dil modeli ve dizi oluşturma
+	* Yeni dizileri örnekleme
+	* RNN'lerle kaybolan gradyanlar
+	* Geçitli Tekrarlayan Birim (GRU)
+	* Uzun Kısa Süreli Bellek (LSTM)
+	* Çift yönlü RNN
+	* Derin RNN'ler
+2) Doğal Dil İşleme ve Kelime Gömmeleri
+	* Kelime Gömmelerine Giriş
+		- Kelime Gösterimi
+		- Kelime gömmelerini kullanma
+		- Kelime gömmelerinin özellikleri
+		- Gömme matrisi
+	* Kelime Gömmelerini Öğrenme: Word2vec ve GloVe
+		- Kelime gömmelerini öğrenme
+		- Word2Vec
+		- Negatif Örnekleme
+		- GloVe kelime vektörleri
+	* Kelime Gömmeleri kullanan uygulamalar
+		- Duygu Sınıflandırması
+		- Sözcük gömmelerini azaltma
+3) Dizi modelleri ve Dikkat mekanizması
+	* Çeşitli diziden diziye mimariler
+		- Temel Modeller
+		- En olası cümleyi seçmek
+		- Işın Arama
+		- Işın Aramada İyileştirmeler
+		- Işın aramada hata analizi
+		- BLEU Puanı
+		- Dikkat Modeli Sezgi
+		- Dikkat Modeli
+	* Konuşma tanıma - Ses verileri
+		- Konuşma tanıma
+		- Tetik Kelime Tespiti
+4) Trafo Ağı
+	* Transformatörler
+		- Trafo Ağı Sezgisi
+		- Öz-Dikkat
+		- Çok Başlı Dikkat
+		- Trafo Ağı
+5) Makine çevirisi dikkat modeli (Not defterlerinden) <br><br>
+
+<hr>
+
+* NLP lerde CNN kullanılmama sebepleri :
+	- Çıkış farklı boyutlarda olabilir,
+	-Farklı konumlarda öğrenilen özellikler paylaşılamaz. (Giriş çıkışta değil, ara katmanlarda öğrenilen özellikler )  Bu nedenle Tekrarlayan sinir ağı RNN kullanılır. Bir RNN örneği  ; <br><br>
+	![1.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/1.jpg) <br>
     
 * RNN’ ler genelde sıfır ile başlatılır. Kullanıhlan üç ağırlık matrisi : Wax, Waa, Wya dır. <br>
   - Wax :  ( Gizli nöron sayısı, nx )
@@ -15,18 +67,15 @@
   - Wya : (ny, gizli nöron sayısı ) 
 
 * Waa , RNN’ in önceki katmanlardan korumaya çalıştığı bellketir.  İLgili RNN mimarisinde y<t> çıkışı, bir önceki giriş ve aktivasyonlara bağlıdır. Yani y<4> çıkışı için hesapları sadece x<1>, x<2> ve x<3> etkiler. x<4> ün etkisi yoktur. <br><br>
-
-![2.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/2.jpg) <br><br>
+	![2.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/2.jpg) <br><br>
 
   
   
 * Ancak bu RNN lerde ortayaçıkan sorun, sonraki bilgileri kullanamıyor olmasıdır. Örneğin “Teddy, bir başkandı”  cümlesinde Teddy isminin bir şahıs olduğu sonucuna başkan kelimesi ile varabiliyoruz ancak bu bilgi, ileriki seviyelerden alınamıyor. Bunun çözümü için “Çift Yönlü RNN”  kullanılmaktadır. 
 * Mevcut, çift yönlü olmayan RNN ler için ileri besleme denklemleri : <br><br>
-  
-![3.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/3.jpg) <br><br>
+	![3.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/3.jpg) <br><br>
   
 * a’ nin aktivasyon fonksiyonu genelde tanh veya ReLU’ dur. Y için ise sigmoid veya softmax kullanılmaktadır. Özel isim- varlık modelinde iki sınıf yer aldığı için sigmoid örneği yapılmıştır. Bu son denklemleri biraz basitleştirerek ele alacak olursak basitleştirilmiş RNN gösterimi ; <br><br>
-
   ![4.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/4.jpg) <br><br>
   
   - Wa, Waa ve Wax in sıkıştırılmış gösterimidir.
@@ -36,6 +85,8 @@
 * Bonus : Ayrıntılı RNN tek cell görünümü : <br><br>
   ![5.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/5.jpg) <br><br>
   
+<hr>
+	
 * RNN : <br><br>
     ![6.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/6.jpg) <br><br>
   
@@ -115,7 +166,9 @@
   2) Vanishing Gradyan ( Kaybolan Gradyan ) problemi için yöntemler : 
     - Ağırlık başlatma 
     - LSTM / GRU ağı kullanımı
-    - Echo state networks
+    - Echo state networks <br><br>
+<hr>
+	
 * GRU - Gated Recurrent Unit : 
     - GRU, kaybolan gradyan probleminin çözümü için uzun vadeli bağımlılıkların hatırlanmasını sağlayabilen bir RNN türüdür. ( Dersin bu noktasında referans verilen makale linkleri : 
       * https://arxiv.org/abs/1409.1259 
@@ -141,7 +194,9 @@
         - NOT : Denklemlerde bulunan çarpma, eleman bazlı çarpmadır. 
         - Bu noktaya kadar açıklanan GRU, Basitleştirilmiş - Simplified GRU’ dur. Buradan sonra Full GRU açıklanacaktır. Full GRU, bir sonraki c tahmini için kullanılır. Bir önceki c değerinin ( c^<t-1> ) , bir sonraki c değerini ( c^<t> ) nasıl etkilediğini, ne derece bağımlı olduğunu açıklamak için kullanılır.  <br><br>
   ![24.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/24.jpg) <br><br>
-        - Yukarıdaki formülde r_u ( gama_r ), ilgi düzeyini göstermektedir. 
+        - Yukarıdaki formülde r_u ( gama_r ), ilgi düzeyini göstermektedir. <br><br>
+<hr>
+	
 * LSTM ( Uzun Kısa süreli bellek ) :  LSTM, uzun vadeli bağımlılıkları tutabilmek için kullanılan bir RNN türüdür. ( NOT : LSTM için açıklayıcı bir link : https://mfakca.medium.com/lstm-nedir-nas%C4%B1l-%C3%A7al%C4%B1%C5%9F%C4%B1r-326866fd8869 ) GRU’ larda c^<t> = <^<t> iken, LSTM’ lerde c^<t>, a^<t>’ ye eşit değildir. LSTM’ e ait denklemler aşağıda verilmiştir. <br><br>
    ![25.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/25.jpg) <br> <br>
         - LSTM’ e ait genel bir yapı ; <br><br>
@@ -158,15 +213,18 @@
     - Görüldüğü gibi yapı döngüsel değildir. İleri yayılımın bir kısmı soldan sağa, bir kısmı sağdan sola ilerler. Bu sayede her iki taraftan da öğrenme gerçekleşmiş olur. Tahmin aşamasında hem sol hem de sağdan gelen iki aktivasyon çıktısı da kullanılır ve  ŷ <t> hesaplanır. 
     - Buradaki bloklar, temel RNN’ ler , LSTM’ ler veya GRU’ lar da dahil olmak üzere herhangi bir RNN olabilmektedir.
     - Bidirectional RNN’ lerin dezavantajı ise, işlemek için tüm diziye ihtiyaç duyulmasıdır. Bu da gerçek zamanlı kullanımlarda gecikmelere sebep olabilmektedir.
-  
+
+	
 * Derin RNN’ ler - Deep RNN’ s : Bazı durumlarda tek katmanlı RNN’ ler işe yaramaz. Bu durumlarda Derin RNN’ ler kullanılır. Aşağıda bir örnek verilmiştir. <br><br>
  ![31.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/31.jpg) <br><br>
     - Not : a[2]<3> = g(W_a[2] * [a[2]<2>, <[1]<3> ] + b_a[2] ) <br><br><br>
 
+   <br><br>
+<hr>
+	
+* Doğal Dil İşleme ve Kelime Gömmeleri (  NAtural Language Processing and Word Embeddings ) <br>
   
-  * <b> Doğal Dil İşleme ve Kelime Gömmeleri (  NAtural Language Processing and Word Embeddings ) </b> <br>
-  
-  * Kelime Gösterimi : Word Embedding, sözcükleri temsil etmenin bir yoludur. Algoritmanın, “kral” ve “kraliçe” gibi kelimeler arasındaki analojileri otomatik olarak anlamasını sağlar. Derslerde bu noktaya kadar gösterim için one-hot-encoding yöntemi kullanıldı. Buna bir örnek aşağıda verilmiştir :  <br><br>
+* Kelime Gösterimi : Word Embedding, sözcükleri temsil etmenin bir yoludur. Algoritmanın, “kral” ve “kraliçe” gibi kelimeler arasındaki analojileri otomatik olarak anlamasını sağlar. Derslerde bu noktaya kadar gösterim için one-hot-encoding yöntemi kullanıldı. Buna bir örnek aşağıda verilmiştir :  <br><br>
      ![32.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/32.jpg) <br><br>
     - Bu temsilin genel dezavantajı, kelimeler arasında genelleştirmeye izin vermemesidir. Bu duruma bir örnek vermemiz gerekirse ;
       * “ I want a glass of orange __ “  cümlesi verildiğinde, model sonraki kelimeyimeyve suyu olarak tahmin etmelidir. 
@@ -176,7 +234,7 @@
     - Bu örnekte her kelime, 300 özelliğe sahip olur. Yani her kelimenin 300 boyutlu bir vektörden oluştuğu söylenebilir. Anlatılan iki cümle örneğinie dönülecek olunursa; yukarıdaki 300 boyutlu vektör sayesinde portakal ve elma birçok özelliği paylaşmaktadır. Bu özellik paylaşımı ile iki kelime arasında bir genelleme yapılabilmektedir.  İşte bu yaklaşıma “Word Embedding”  denir. <br>
     - Word Embedding ‘ in bir görselleştirmesi için aşağıdaki örnek verilmiştir. <br><br>
    ![34.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/34.jpg) <br><br>
-    - Burada da görüldüğü gibi, benzer kelimeler birbirine daha yakın konumlanmıştır. Yani one-hot-encoding’ de olduğu gibi her kelime arası mesafe eşit değildir. 
+    - Burada da görüldüğü gibi, benzer kelimeler birbirine daha yakın konumlanmıştır. Yani one-hot-encoding’ de olduğu gibi her kelime arası mesafe eşit değildir.<br><br> 
 * Word Embedding kullanımı : 
     - Her bir kelime için oluşturulmuş word embedding lerin varlık tanıma problemleri üzerinde nasıl kullanıldığına bakacak olursak;<br><br>
      ![35.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/35.jpg) <br><br>
@@ -203,7 +261,7 @@
 * Kosinüs benzerliği : En çok kullanılan benzerlik yöntemidir. Denklemi :<br><br>
     ![39.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/39.jpg) <br><br>
   - Buradaki çarpımlar vekrtörlerin iç çarpımlarını ifade etmektedir. Vektörler çok benzer ise elde edilen değer büyük olur. Bu sebeple iklid mesafesi, bir benzerlik ölçütü olarak da kullanılabilir. Burada : 
-    * u = e_w , v = e_king - e_man + e_woman olarak kullanılmalıdır.
+    * u = e_w , v = e_king - e_man + e_woman olarak kullanılmalıdır.<br><br>
 * Embedding matris : Embedding kelimenin öğrenilebilmesi için bir algoritma kullanıldığında elde edilen matris, gömme matrisidir (embedding matrix ). 10.000 kelimelik bir kelime dağarcığı ve 300 özellik için elde edilen embedding matris boyutu (300, 10.000) ‘ dir. E ile gösterilir.<br><br>
  ![40.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/40.jpg) <br><br>
   - E ilk başta random olarak başlatılır, daha sonra parametreler için öğrenme gerçekleşir.
@@ -217,6 +275,8 @@
     - NN katmanında W1 ve b1 parametreleri, softmax katmanında ise W2 ve b2 parametreleri bulunmaktadır. 
     - Tahmin edilen kelimeden önce 6 kelime olduğu için pencere ( window ) boyutu 6’ dır. Dolayısıyla girdi boyutu ( 300 * 6 , 1 )’ dir.  Burada, bağlam verildikten sonra tahmin olasılığını maksimuma çıkarmak için E matrisi ve katman parametreleri optimize edilir.
     - Yukarıdaki örnekte ele alınan 6 değeri dışında farklı değerler de kullanılabilir. Örneğin son 4 kelime, sol ve sağdan 4 kelime, son 1 kelime, en yakın ( word embedding için mesafeden söz ediyoruz. ) 1 kelime dikkate alınabilmektedir. <br><br>
+
+<br><br>	
 * Word2Vec : ( referans link : https://arxiv.org/abs/1301.3781 ). Word2Vec’ ten önce skip-gram’ lardan bahsedelim. Örneğin “ I want a glass of orange juice to go along with my cereal.”  cümlesi için bağlam ve hedef seçilmelidir. Hedef değişkeni, belirli boyuta sahip bir pencereye göre seçilir. <br><br>
   ![43.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/43.jpg) <br><br>
   - Kelime dağarcığı 10.000, c bağlam kelimesi “portakal” ve hedef kelime t “meyve suyu” olsun. c’ den t’ ye haritalamanın öğrenilebilmesi için ; 
@@ -249,7 +309,7 @@
 * Word embedding’ lerle ilgili çıkan sonuçlar : 
 	- İlk kullanımlarda, daha önce kullanılmış ve iyi sonuç vermiş, eğitilmiş bir model kullanılmalıdır. 
 	- Yeterli veri bulunması durumunda, mevcut algoritmalar kullanılabilir. 
-	- Word embedding’ leri eğitmek, hesaplama açısından çok pahalı olduğundan, çoğu makine öğrenimini kullanan kişiler, embedding’ ler için pre-trained set kullanır.
+	- Word embedding’ leri eğitmek, hesaplama açısından çok pahalı olduğundan, çoğu makine öğrenimini kullanan kişiler, embedding’ ler için pre-trained set kullanır.<br><br>
 * Word Embedding Kullanan Uygulamalar : 
 	a) Sentiment Classification : Bir metnin olumlu-olumsuz olma durumunu değerlendirir. Örneğin bir film için yazılan yorumun olumlu-olumsuzluk durumu değerlendirilir ve yıldız oluşturulur. NLP’ lerde çok faydalıdır ve pek çok noktada kullanılır. Sentiment Classification için bir örnek aşağıda verilmiştir : <br><br> 
   ![51.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/51.jpg) <br><br>
@@ -280,7 +340,7 @@
 			- Bu eşlemenin yapılabilmesi için dede- anneanne noktaları, non-bias noktasının ortasında olacakları yeni noktalara ( mor noktalar ) taşınmıştır. <br><br>
   ![58.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/58.jpg) <br><br>
 			- Diğer noktalar da bu örnekteki gibi yeni noktalara taşınır.
-			- Daha fazla ayrıntı için orijinal makale → https://arxiv.org/abs/1607.06520 
+			- Daha fazla ayrıntı için orijinal makale → https://arxiv.org/abs/1607.06520 <br>
 * Dizi Modelleri ve Dikkat Mekanizması : Bir dizi modelinin başarımı, dikkat mekanizmaları kullanılarak artırılabilir. Bu algoritma, model bir girdi aldığında hangi noktalara odaklanması gerektiğini anlamasında yardımcı olur. 
 * Farklı sequence - to - sequence modelleri | temel modeller : 
 	- X’  in bir Fransizce dizisi ( Fransızca cümle ) ve Y’ nin bir İngilizce dizisi olduğu bir makine çevirisi göz önüne alınsın. <br><br>
@@ -312,7 +372,8 @@
 		* Bu durum bir örnekle açıklanacak olunursa : 
 		* En iyi çıktı : “Jane is visiting Africa in September.” olsun.
 		* Greedy ile bir seçim yapıldığında ilk iki kelime “Jane is” olsun. Bundan sonra “going” kelimesi seçilebilir, çünkü is’ den sonra en çok kullanılan kelime “going” tir. Yani bu seçim sonrası çıktı cümlesi şu şekilde oluşur : “Jane is going to be visiting Africa in September”. Görüldüğü gibi istenen çıktı elde edilememiş oluyor. 
-
+<br><br>
+	
 * Bean Search : Bean search, en iyi çıktıyı elde etmek için kullanılan sezgisel algoritmadır. Bir önceki örnekten devam edecek olursak, yine istenen çıktı Y = “ Jane is visiting Africa in September” dır. 
 	- Algoritma, B genişliği olan bir parametredir. Burada B = 3 olması, algoritmanın bir seferde 3 olası çıktıyı dikkate alacağı anlamına gelir. 
 	- İlk adım için 10.000 oalsılık arasından ilk kelimeler için en iyi 3 aday [“in”, “jane”, “september”]’ dır. <br><br>
@@ -340,14 +401,14 @@
 	b) En iyi bean genişliği ( B ) nasıl seçilir ? : B ne kadar büyük seçilirse, o kadar büyük olasılıklar göz önünde bulundurulur, sonuç da bir o kadar iyileştirilir. 
 * Bean Search için Hata Analizi : Modelde alınan hatalı çıktının sebebinin B hiperparametresinden mi yoksa RNN’ den mi kaynaklandığını tespit etmek için hata analizi yapılır. Bunun yapılabilmesi için ( y^* : doğru cevap , y^ : model çıktısı o.ü. )  P(y^* | X ) ve P (y^ | X ) hesaplanır. Bu hesaplar için iki durum vardır : 
 	1) P(y * | X) >  P(ŷ | X) : Böyle bir durumda hata Bean search’ ten kaynaklanır.
-	2) P(y * | X) ≤ P(ŷ | X) : Burada ise hata RNN’ den kaynaklanmıştır. 
+	2) P(y * | X) ≤ P(ŷ | X) : Burada ise hata RNN’ den kaynaklanmıştır. <br><br>
 * BLEU Skor : Makine çevirisinin zorluklarından biri, bir dilde çeviri yapılması gerektiğinde, diğer dilde birden çok çevirinin olmasıdır.( Problemin çözümü için kullanılan kaynak makale : https://aclanthology.org/P02-1040.pdf ). Bu noktada seçim yapılabilmesi için BLEU puanı kullanılmaktadır. Buradaki mantık : Makine tarafından oluşturulan çeviri, insanlar tarafından sağlanan referanslardan herhangi birine oldukça yakın olduğu sürece, yüksek bir BLEU puanı elde edilecektir. Bir örnek üzerinden gidelim : 
 	- X = “ Le chat est sur le tapis.”
 	- Y1 = “The cat is on the mat.” ( insan kaynağı 1 ) 
 	- Y2 = “ There is a cat on the mat.” ( insan kaynağı 2 ) 
 	- Bu örnek için makinenin “the the the the” çıktısını verdiğini düşünelim. Makine çıktısını değerlendirmenin bir yolu, çıktıdaki her kelimeye bakmak ve referanslarda olup olmadığını kontrol etmektir. Bu işleme kısaca kesinlik denmektedir. Verilen makine çıktısı için kesinlik : 7/7’ dir, çünkü “the” iki insan kaynağında da vardır. Görüldüğü gibi bu değerlendirme kullanışlı değildir. 
 	- Daha etkili bir değerlendirme için, kelimenin maksimum sayısıyla, referans bir kesinlik değeri kullanılabilir. Bu durumu şu şekilde açıklayabiliriz : 
-değiştirilmiş hassasiyet : 2/7’ dir. Çünkü “the” kelimesi için maksimum kullanılma sayısı Y1’ dedir ve bu değer 2’ ye eşittir. Bu şekilde, kullanılan her kelime için bir oran oluşturulur. (unigram, n-gram ) 
+değiştirilmiş hassasiyet : 2/7’ dir. Çünkü “the” kelimesi için maksimum kullanılma sayısı Y1’ dedir ve bu değer 2’ ye eşittir. Bu şekilde, kullanılan her kelime için bir oran oluşturulur. (unigram, n-gram ) <br><br>
 * Bigram’ larda BLEU puanı : N-gramlar tipik olarak bir metin veya konuşma dağarcığından toplanır. 1 boyutlu n-gramlar “unigram”, 2 boyutlular “bigram” , 3 boyutlular “trigram”  olarak adlandırılır. 
 	- X = “ Le chat est sur le tapis.”
 	- Y1 = “The cat is on the mat.” ( insan kaynağı 1 ) 
@@ -363,7 +424,9 @@ değiştirilmiş hassasiyet : 2/7’ dir. Çünkü “the” kelimesi için maks
 		* BP, kısa cezası anlamına gelen ceza değeridir. Bu değer kullanılmazsa, makine daha kısa çıktı verme eğiliminde olacaktır. <br><br>
   ![71.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/71.jpg) <br><br>
 	- BLEU değeri, makine çevirisi ve resim alt yazısı gibi çeşitli sistemlerde kullanılmaktadır. <br><br> 
-
+<br><br>
+<hr>
+	
 * Dikkat Modeli ( Attention Model Intuition ) : Dersin bu noktasına kadar kodlayıcı ve kod çözücüler için diziler kullanılmıştır. Bu noktadan sonra, daha iyi iyileştirmeler yapılabilmesi için “attention” tekniği açıklanacaktır. 
 	- Uzun diziler sorunu : <br><br>
   ![72.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/72.jpg) <br><br>
@@ -399,6 +462,8 @@ değiştirilmiş hassasiyet : 2/7’ dir. Çünkü “the” kelimesi için maks
 	- Dikkat ağırlıklarının görselleştirilmiş hali aşağıda verilmiştir. <br><br>
   ![83.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/83.jpg) <br><br>
 	<br><br>
+<hr>
+	
 * Konuşma Tanıma - Ses Verileri : 
 * Konuşma tanıma : Konuşma tanımada X : ses klibi, Y : transkripttir. Bir ses klibinin görselleştirilmiş hali aşağıda verilmiştir. <br> <br> 
   ![84.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/84.jpg) <br><br>
@@ -420,7 +485,9 @@ değiştirilmiş hassasiyet : 2/7’ dir. Çünkü “the” kelimesi için maks
 			- İlgili makale : https://dl.acm.org/doi/10.1145/1143844.1143891 
 
 	- Bu noktada, hem dikkat modeli hem de CTC kullanımı, konuşma tanımayı oldukça etkili hale getirmektedir. 
-
+<br><br>
+<hr>
+	
 * Trigger Word Detection (Tetikleyici kelime tespiti ) : Trigger Word ( tetikleyici kelime ) tespit sistemleri, algılanan bir kelime ile sistemin aktifleşmesini sağlar. Aşağıda bu sistemlere örnek verilmiştir. <br><br><br>
   ![88.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/88.jpg) <br><br>
 	- Trigger Word sistemleri henüz gelişmekte olduğu için kabul görülen evrensel bir algoritma yoktur. Ancak, kullanılabilecek bir algoritma aşağıda verilmiştir. İlk olarak bir model oluşturulsun ; 
@@ -444,7 +511,7 @@ değiştirilmiş hassasiyet : 2/7’ dir. Çünkü “the” kelimesi için maks
 	- Transformer Ağlarda kullanılan iki önemli başlık : 
 		* Öz dikkat :  n kelime için n temsil paralel olarak  hesaplanır.
 		* Çok başlı dikkat :  Öz dikkat için uygulanan döngüler, bu temsillerin birden çok versiyonunu oluşturur. 
-
+<br><br>
 * Öz Dikkat : 
 	- Yine “Jane visite L’Afrique en September” örneği üzerinden gidilsin. 
 	- Her kelime için elimizde : 
@@ -479,7 +546,8 @@ değiştirilmiş hassasiyet : 2/7’ dir. Çünkü “the” kelimesi için maks
   ![93.jpg](https://github.com/SeymaAtmaca/Deep-Learning-Specialization/blob/main/Sequence%20Models/images/93.jpg) <br><br>
 	- Çok başlı dikkat şu şekilde hesaplanır : 
 		* Multihead(q, k, v) = concat(heads).W0 <br><br><br>
-
+<hr>
+	
 * Transformer Ağlar : 
 	- Trandformer ağların ana fikri : 
 		* Gömme e değeri, q, k, ve v ile beraber bir çok başlı dikkate sahip kodlayıcıya beslenir. Ardından ileri beslemeli sinir ağına geçer. Bu kodlayıcı blok N kez tekrarlanır. 
