@@ -1,13 +1,11 @@
-<hr>
-
-* Kaynak : 
+## Kaynak :book: : 
 Bu not, DeepLearning.ai tarafından verilen "Neural Networks and Deep Learning" adlı eğtiime ait notları içermektedir.
 İlgili notlar, [sayfasında](https://github.com/quanghuy0497/Deep-Learning-Specialization/tree/main/Course%201%20-%20Neural%20Network%20and%20Deep%20Learning) yer alan İngilizce metinden çevirilmiştir. <br>
 
-<hr>
+<br>
 
+## İçerik : :point_down: <br>
 
-İçerik : <br>
 1) Derin öğrenmeye giriş
     * Bir (Sinir Ağı) SA nedir?
     * Sinir ağlarıyla denetimli öğrenme
@@ -51,7 +49,7 @@ Bu not, DeepLearning.ai tarafından verilen "Neural Networks and Deep Learning" 
 <hr>
 
 
-* Yapay sinir ağları nedir ( What is Neural Network ( NN )) ? 
+* Yapay sinir ağları nedir ( What is Neural Network ( NN )) ?  
     - Tek nöron == aktivasyon uygulanmamış lineer regresyona eşittir. (perceptron)
     - Temel olarak tek nöron, girdinin ağırlıkları toplamını ( W^T * X ) hesaplar ve sonra bir eşik değerine göre çıktı tahmin edilir. 
     - Eğer girdiye ait ağırlıklar toplamı eşik değeri geçerse, perceptron çalışır, aksi durumda tahmin yapılmaz.
